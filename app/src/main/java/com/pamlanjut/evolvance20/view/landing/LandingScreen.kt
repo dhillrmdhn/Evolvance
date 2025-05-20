@@ -43,7 +43,7 @@ import com.pamlanjut.evolvance20.R
 
 @Composable
 fun LandingScreen(
-    viewModel: LandingViewModel = hiltViewModel()
+    viewModel: LandingViewModel
 ) {
     val progressValue = viewModel.textData.value
     val count = viewModel.count.value

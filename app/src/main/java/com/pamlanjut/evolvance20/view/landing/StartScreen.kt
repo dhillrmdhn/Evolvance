@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.pamlanjut.evolvance20.R
 
 @Composable
-fun StartScreen() {
+fun StartScreen(
+    onStart: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -31,7 +33,9 @@ fun StartScreen() {
             modifier = Modifier.size(300.dp)
         )
         Button(
-            onClick = { /*...*/ },
+            onClick = {
+                onStart()
+            },
             modifier = Modifier.size(width = 250.dp, height = 45.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
