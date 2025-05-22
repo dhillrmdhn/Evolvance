@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Evolvance</string>
+    <string name="base_url">https://evolvanceapi.kuncipintu.my.id/api/</string>
 </resources>
