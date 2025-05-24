@@ -3,6 +3,7 @@ package com.pamlanjut.evolvance20.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 
 @Composable
 fun RootNavGraph(
@@ -10,8 +11,9 @@ fun RootNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "landing"
+        startDestination = "auth"
     ) {
         landingNavGraph(navController = navController)
+        authNavGraph(navController = navController)
     }
 }

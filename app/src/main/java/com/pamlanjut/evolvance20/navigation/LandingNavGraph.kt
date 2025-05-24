@@ -24,7 +24,8 @@ fun NavGraphBuilder.landingNavGraph(
                 }
             )
         }
-        composable("start-2") { backStackEntry ->
+
+        composable("start-2") {
             val viewModel = hiltViewModel<LandingViewModel>()
             LandingScreen(viewModel = viewModel)
         }

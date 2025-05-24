@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +54,7 @@ import com.pamlanjut.evolvance20.R
 fun LoginScreen(
     viewModel: AuthenticationViewModel = hiltViewModel()
 ) {
-    val loginState = viewModel.loginState
+    val loginState by viewModel.loginState.collectAsState()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -214,10 +215,11 @@ fun LoginScreen(
                         )
                     }
                 }
+
                 when (loginState) {
                     is LoginState.Loading -> CircularProgressIndicator()
-                    is LoginState.Success -> Text("Logged in! Token: ${loginState.token}")
-                    is LoginState.Error -> Text("Error: ${loginState.message}", color = Color.Red)
+                    is LoginState.Success -> Text("Logged in! Token: ${(loginState as LoginState.Success).token}")
+                    is LoginState.Error -> Text("Error: ${(loginState as LoginState.Error)}", color = Color.Red)
                     else -> {}
                 }
             }

@@ -1,0 +1,182 @@
+package com.pamlanjut.evolvance20.view.authentication
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.pamlanjut.evolvance20.R
+import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterOtpScreen() {
+    Box(
+        Modifier
+            .fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.mainbackground),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize().alpha(0.7f)
+        )
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(25.dp, 90.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.logotext),
+                        contentDescription = "Logo Text Evolvance",
+                        modifier = Modifier
+                            .graphicsLayer {
+                                scaleX = 2.5f
+                                scaleY = 2.5f
+                            }
+                            .align(Alignment.Center)
+                    )
+                    IconButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .size(35.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back Button",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
+
+                Column(
+                    Modifier
+                        .padding(0.dp, 30.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(30.dp)
+                ) {
+                    Text(
+                        "Verifikasi",
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(R.color.main_color)
+                        )
+                    )
+
+                    Column (
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Text(
+                            "Masukkan kode 6 digit yang sudah kami kirimkan melalui email hathisha@gmail.com.",
+                            style = TextStyle(
+                                textAlign = TextAlign.Justify,
+                                lineHeight = 20.sp
+                            )
+                        )
+                        Text(
+                            "Masa berlaku kode akan berakhir dalam 10:00"
+                        )
+                    }
+
+                    OtpInput()
+                }
+            }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row (
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    Text(
+                        "Sudah memiliki akun?",
+                        style = TextStyle(
+                            fontSize = 12.sp
+                        )
+                    )
+                    Text(
+                        "Masuk",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorResource(R.color.main_color)
+                        ),
+                        modifier = Modifier.clickable {  }
+                    )
+                }
+                Button(
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .border(0.5.dp, colorResource(R.color.main_color), RoundedCornerShape(12.dp)),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.white),
+                        contentColor = colorResource(R.color.main_color),
+                    )
+                ) {
+                    Text(
+                        "Kembali"
+                    )
+                }
+                Button(
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.main_color),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        "Berikutnya"
+                    )
+                }
+            }
+        }
+    }
+}
