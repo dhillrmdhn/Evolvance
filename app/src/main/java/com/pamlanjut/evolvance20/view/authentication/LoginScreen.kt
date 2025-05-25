@@ -44,6 +44,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +60,8 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    var isVisible by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -137,6 +141,7 @@ fun LoginScreen(
                         )
                     }
                 }
+
                 Column (
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -144,14 +149,15 @@ fun LoginScreen(
                         "Kata Sandi",
                         fontWeight = FontWeight.Bold,
                     )
-                    Box(
+                    Row(
                         modifier = Modifier
                             .height(52.dp)
                             .fillMaxWidth()
                             .border(0.5.dp, Color.Black, RoundedCornerShape(16.dp))
                             .background(Color.Transparent, RoundedCornerShape(16.dp))
                             .padding(horizontal = 16.dp),
-                        contentAlignment = Alignment.CenterStart
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         BasicTextField(
                             value = password,
@@ -163,8 +169,21 @@ fun LoginScreen(
                                 color = Color.Black
                             ),
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.weight(1f),
+                            visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
                         )
+                        IconButton(
+                            onClick = {
+                                isVisible = !isVisible
+                            }
+                        ) {
+                            Image(
+                                painter = painterResource(
+                                    id = if (isVisible) R.drawable.baseline_visibility_off_24 else R.drawable.baseline_visibility_24
+                                ),
+                                contentDescription = "Visible Button"
+                            )
+                        }
                     }
                 }
 

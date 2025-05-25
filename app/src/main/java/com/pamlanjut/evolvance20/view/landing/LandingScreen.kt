@@ -39,11 +39,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 
 @Composable
 fun LandingScreen(
-    viewModel: LandingViewModel
+    viewModel: LandingViewModel,
+    navController: NavController
 ) {
     val progressValue = viewModel.textData.value
     val count = viewModel.count.value
@@ -150,7 +152,7 @@ fun LandingScreen(
             ) {
                 Button(
                     onClick = {
-                        viewModel.increment()
+                        if (count == 2) navController.navigate("auth/register") else viewModel.increment()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
@@ -190,7 +192,9 @@ fun LandingScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 color = colorResource(R.color.main_color)
                             ),
-                            modifier = Modifier.clickable {  }
+                            modifier = Modifier.clickable {
+                                navController.navigate("auth/login")
+                            }
                         )
                     }
                 }

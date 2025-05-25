@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pamlanjut.evolvance20.view.authentication.AuthenticationViewModel
+import com.pamlanjut.evolvance20.view.authentication.LoginScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterOtpScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterTnCScreen
@@ -17,11 +18,10 @@ fun NavGraphBuilder.authNavGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = "register",
+        startDestination = "auth/register",
         route = "auth"
     ) {
-
-        composable("register") { backStackEntry ->
+        composable("auth/register") { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry("auth")
             }
@@ -36,7 +36,7 @@ fun NavGraphBuilder.authNavGraph(
             )
         }
 
-        composable("register-tnc") { backStackEntry ->
+        composable("auth/register-tnc") { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry("auth")
             }
@@ -45,13 +45,24 @@ fun NavGraphBuilder.authNavGraph(
             RegisterTnCScreen(viewModel = authViewModel, navController = navController)
         }
 
-        composable("register-otp") { backStackEntry ->
+        composable("auth/register-otp") { backStackEntry ->
             val parentEntry = remember(backStackEntry) {
                 navController.getBackStackEntry("auth")
             }
             val authViewModel: AuthenticationViewModel = hiltViewModel(parentEntry)
 
             RegisterOtpScreen(
+                viewModel = authViewModel
+            )
+        }
+
+        composable("auth/login") { backStackEntry ->
+            val parentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry("auth")
+            }
+            val authViewModel: AuthenticationViewModel = hiltViewModel(parentEntry)
+
+            LoginScreen(
                 viewModel = authViewModel
             )
         }

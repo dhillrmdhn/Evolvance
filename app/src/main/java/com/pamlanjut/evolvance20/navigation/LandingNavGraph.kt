@@ -27,7 +27,10 @@ fun NavGraphBuilder.landingNavGraph(
 
         composable("start-2") {
             val viewModel = hiltViewModel<LandingViewModel>()
-            LandingScreen(viewModel = viewModel)
+            LandingScreen(
+                viewModel = viewModel,
+                navController = navController
+            )
         }
     }
 }
