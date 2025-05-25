@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
+import com.pamlanjut.evolvance20.view.authentication.components.SuccessModal
 import kotlinx.coroutines.delay
 
 @Composable
@@ -58,6 +59,7 @@ fun RegisterOtpScreen(
     var otpDigitsString = otpDigits.joinToString("")
 
     val authUiState by viewModel.authUiState.collectAsState()
+    var showDialog by remember { mutableStateOf(false) }
 
     // Timeleft
     var timeleft by remember { mutableIntStateOf(600) }
@@ -228,6 +230,26 @@ fun RegisterOtpScreen(
                         "Berikutnya"
                     )
                 }
+            }
+
+            if (showDialog) {
+                SuccessModal(
+                    show = showDialog,
+                    onDismiss = {
+                        showDialog = false
+                    }
+                )
+            }
+
+            when (authUiState) {
+                is AuthUiState.Success -> {
+                    LaunchedEffect(Unit) {
+                        showDialog = true
+                        delay(100)
+                        viewModel.resetRegisterState()
+                    }
+                }
+                else -> {}
             }
         }
     }

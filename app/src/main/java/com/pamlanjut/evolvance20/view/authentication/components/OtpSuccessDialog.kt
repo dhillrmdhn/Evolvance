@@ -50,7 +50,7 @@ fun OtpSuccessDialog() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.verified_icon),
+                painter = painterResource(R.drawable.verifiedicon),
                 contentDescription = "Centang",
                 Modifier
                     .size(120.dp)
