@@ -72,6 +72,10 @@ class AuthenticationViewModel @Inject constructor(
     fun updateRegisterRequest(request: RegisterRequest) {
         _registerRequest.value = request
     }
+
+    fun resetRegisterState() {
+        _registerState.value = RegisterState.Idle
+    }
 }
 
 sealed class LoginState {

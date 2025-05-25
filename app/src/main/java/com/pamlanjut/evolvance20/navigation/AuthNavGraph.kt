@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pamlanjut.evolvance20.view.authentication.AuthenticationViewModel
+import com.pamlanjut.evolvance20.view.authentication.RegisterOtpScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterTnCScreen
 
@@ -16,7 +17,7 @@ fun NavGraphBuilder.authNavGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = "register",
+        startDestination = "register-otp",
         route = "auth"
     ) {
 
@@ -30,7 +31,8 @@ fun NavGraphBuilder.authNavGraph(
                 viewModel = authViewModel,
                 tncNavigate = {
                     navController.navigate("register-tnc")
-                }
+                },
+                navController = navController
             )
         }
 
@@ -41,6 +43,17 @@ fun NavGraphBuilder.authNavGraph(
             val authViewModel: AuthenticationViewModel = hiltViewModel(parentEntry)
 
             RegisterTnCScreen(viewModel = authViewModel, navController = navController)
+        }
+
+        composable("register-otp") { backStackEntry ->
+            val parentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry("auth")
+            }
+            val authViewModel: AuthenticationViewModel = hiltViewModel(parentEntry)
+
+            RegisterOtpScreen(
+                viewModel = authViewModel
+            )
         }
     }
 }

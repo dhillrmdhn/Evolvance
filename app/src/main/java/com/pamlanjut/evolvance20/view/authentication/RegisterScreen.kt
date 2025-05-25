@@ -56,13 +56,15 @@ import androidx.compose.ui.unit.sp
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.RegisterRequest
 
 @Composable
 fun RegisterScreen(
     viewModel: AuthenticationViewModel,
-    tncNavigate: () -> Unit
+    tncNavigate: () -> Unit,
+    navController: NavController
 ) {
     val registerRequest by viewModel.registerRequestState.collectAsState()
     val isChecked by viewModel.isChecked.collectAsState()
@@ -404,7 +406,9 @@ fun RegisterScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 color = colorResource(R.color.main_color)
                             ),
-                            modifier = Modifier.clickable {  }
+                            modifier = Modifier.clickable {
+                                navController.navigate("register-otp")
+                            }
                         )
                     }
 
@@ -412,6 +416,10 @@ fun RegisterScreen(
 
                     when(registerState) {
                         is RegisterState.Loading -> CircularProgressIndicator()
+                        is RegisterState.Success -> {
+                            navController.navigate("register-otp")
+                            viewModel.resetRegisterState()
+                        }
                         is RegisterState.Error -> Text((registerState as RegisterState.Error).message, color = Color.Red, textAlign = TextAlign.Center)
                         else -> {}
                     }
@@ -420,9 +428,4 @@ fun RegisterScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PasswordView() {
 }

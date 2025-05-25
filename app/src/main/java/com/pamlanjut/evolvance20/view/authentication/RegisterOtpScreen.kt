@@ -21,6 +21,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -37,10 +45,33 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
+import kotlinx.coroutines.delay
 
-@Preview(showBackground = true)
 @Composable
-fun RegisterOtpScreen() {
+fun RegisterOtpScreen(
+    viewModel: AuthenticationViewModel
+) {
+    val otpDigits = remember { mutableStateListOf<Int?>(null, null, null, null, null, null) }
+    val user by viewModel.registerRequestState.collectAsState()
+
+    // Timeleft
+    var timeleft by remember { mutableIntStateOf(600) }
+    var disableButton by remember { mutableStateOf(false) }
+
+    LaunchedEffect(
+        key1 = timeleft
+    ) {
+        while (timeleft > 0) {
+            delay(1000L)
+            timeleft--
+        }
+        disableButton = true
+    }
+
+    val minute = timeleft / 60
+    val second = timeleft % 60
+    val timeleftString = String.format("%02d:%02d", minute, second)
+
     Box(
         Modifier
             .fillMaxSize()
@@ -108,18 +139,24 @@ fun RegisterOtpScreen() {
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            "Masukkan kode 6 digit yang sudah kami kirimkan melalui email hathisha@gmail.com.",
+                            "Masukkan kode 6 digit yang sudah kami kirimkan melalui email ${user.email}.",
                             style = TextStyle(
                                 textAlign = TextAlign.Justify,
                                 lineHeight = 20.sp
                             )
                         )
                         Text(
-                            "Masa berlaku kode akan berakhir dalam 10:00"
+                            "Masa berlaku kode akan berakhir dalam $timeleftString"
                         )
                     }
 
-                    OtpInput()
+                    OtpInput(
+                        otp = otpDigits,
+                        onOtpChange = {
+                            otpDigits.clear()
+                            otpDigits.addAll(it)
+                        }
+                    )
                 }
             }
             Column(
@@ -169,8 +206,11 @@ fun RegisterOtpScreen() {
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(id = R.color.main_color),
-                        contentColor = Color.White
-                    )
+                        contentColor = Color.White,
+                        disabledContainerColor = colorResource(id = R.color.main_color).copy(alpha = 0.25f),
+                        Color.White.copy(alpha = 0.5f)
+                    ),
+                    enabled = !disableButton
                 ) {
                     Text(
                         "Berikutnya"
