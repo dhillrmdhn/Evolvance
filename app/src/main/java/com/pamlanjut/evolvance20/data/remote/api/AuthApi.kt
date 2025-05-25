@@ -15,6 +15,11 @@ interface AuthApi {
     suspend fun register(
         @Body request: RegisterRequest
     ): Response<RegisterResponse>
+
+    @POST("auth/verify")
+    suspend fun verifyOtp(
+        @Body request: VerifyOtpRequest
+    ): Response<RegisterResponse>
 }
 
 data class LoginRequest(
@@ -37,4 +42,9 @@ data class RegisterRequest(
 data class RegisterResponse(
     val success: Boolean,
     val message: String
+)
+
+data class VerifyOtpRequest(
+    val email: String,
+    val code: String
 )

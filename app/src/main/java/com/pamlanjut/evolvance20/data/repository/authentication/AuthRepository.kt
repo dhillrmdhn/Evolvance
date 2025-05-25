@@ -20,4 +20,9 @@ interface AuthRepository {
         password: String,
         password_confirmation: String
     ): Result<String>
+
+    suspend fun verifyOtp(
+        email: String,
+        code: String
+    ): Result<String>
 }

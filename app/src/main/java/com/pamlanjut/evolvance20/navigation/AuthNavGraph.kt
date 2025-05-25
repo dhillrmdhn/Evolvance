@@ -17,7 +17,7 @@ fun NavGraphBuilder.authNavGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = "register-otp",
+        startDestination = "register",
         route = "auth"
     ) {
 

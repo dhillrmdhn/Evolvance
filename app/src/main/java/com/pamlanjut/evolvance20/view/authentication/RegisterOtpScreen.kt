@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -44,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pamlanjut.evolvance20.R
+import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
 import kotlinx.coroutines.delay
 
@@ -53,6 +55,9 @@ fun RegisterOtpScreen(
 ) {
     val otpDigits = remember { mutableStateListOf<Int?>(null, null, null, null, null, null) }
     val user by viewModel.registerRequestState.collectAsState()
+    var otpDigitsString = otpDigits.joinToString("")
+
+    val authUiState by viewModel.authUiState.collectAsState()
 
     // Timeleft
     var timeleft by remember { mutableIntStateOf(600) }
@@ -199,7 +204,14 @@ fun RegisterOtpScreen(
                     )
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        viewModel.verifyOtp(
+                            VerifyOtpRequest(
+                                user.email,
+                                otpDigitsString
+                            )
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
