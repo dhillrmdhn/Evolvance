@@ -14,6 +14,8 @@ interface AuthRepository {
         token: String
     )
 
+    suspend fun getToken(): String?
+
     suspend fun register(
         name: String,
         email: String,

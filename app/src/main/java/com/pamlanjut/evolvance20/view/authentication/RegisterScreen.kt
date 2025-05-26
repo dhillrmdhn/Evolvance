@@ -59,6 +59,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.RegisterRequest
+import com.pamlanjut.evolvance20.view.components.LoadingScreen
 
 @Composable
 fun RegisterScreen(
@@ -407,7 +408,7 @@ fun RegisterScreen(
                                 color = colorResource(R.color.main_color)
                             ),
                             modifier = Modifier.clickable {
-                                navController.navigate("register-otp")
+                                navController.navigate("auth/login")
                             }
                         )
                     }
@@ -415,9 +416,9 @@ fun RegisterScreen(
                     Spacer(Modifier.height(10.dp))
 
                     when(registerState) {
-                        is RegisterState.Loading -> CircularProgressIndicator()
+                        is RegisterState.Loading -> LoadingScreen()
                         is RegisterState.Success -> {
-                            navController.navigate("register-otp")
+                            navController.navigate("auth/register-otp")
                             viewModel.resetRegisterState()
                         }
                         is RegisterState.Error -> Text((registerState as RegisterState.Error).message, color = Color.Red, textAlign = TextAlign.Center)

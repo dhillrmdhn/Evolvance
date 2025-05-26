@@ -8,6 +8,7 @@ import com.pamlanjut.evolvance20.data.remote.api.RegisterResponse
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.domain.model.AuthTokenModel
 import com.pamlanjut.evolvance20.utils.Result
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -23,6 +24,10 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun saveToken(token: String) {
         preference.saveAccessToken(token)
+    }
+
+    override suspend fun getToken(): String? {
+        return preference.getAccessToken().first()
     }
 
     override suspend fun register(

@@ -50,11 +50,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
+import com.pamlanjut.evolvance20.view.components.LoadingScreen
 
 @Composable
 fun LoginScreen(
-    viewModel: AuthenticationViewModel = hiltViewModel()
+    viewModel: AuthenticationViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val loginState by viewModel.loginState.collectAsState()
 
@@ -218,25 +221,27 @@ fun LoginScreen(
                         horizontalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
-                            "Sudah memiliki akun?",
+                            "Belum memiliki akun?",
                             style = TextStyle(
                                 fontSize = 12.sp
                             )
                         )
                         Text(
-                            "Masuk",
+                            "Daftar",
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 color = colorResource(R.color.main_color)
                             ),
-                            modifier = Modifier.clickable {  }
+                            modifier = Modifier.clickable {
+                                navController.navigate("auth/register")
+                            }
                         )
                     }
                 }
 
                 when (loginState) {
-                    is LoginState.Loading -> CircularProgressIndicator()
+                    is LoginState.Loading -> LoadingScreen()
                     is LoginState.Success -> Text("Logged in! Token: ${(loginState as LoginState.Success).token}")
                     is LoginState.Error -> Text("Error: ${(loginState as LoginState.Error)}", color = Color.Red)
                     else -> {}

@@ -48,6 +48,7 @@ import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
 import com.pamlanjut.evolvance20.view.authentication.components.SuccessModal
+import com.pamlanjut.evolvance20.view.components.LoadingScreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -249,6 +250,7 @@ fun RegisterOtpScreen(
                         viewModel.resetRegisterState()
                     }
                 }
+                is AuthUiState.Loading -> LoadingScreen()
                 else -> {}
             }
         }

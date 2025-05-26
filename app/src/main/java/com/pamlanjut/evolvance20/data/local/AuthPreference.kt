@@ -23,7 +23,7 @@ class AuthPreference @Inject constructor(
         }
     }
 
-    suspend fun getAccessToken(): Flow<String?> {
+    fun getAccessToken(): Flow<String?> {
         return dataStore.data.map {
             it[ACCESS_TOKEN]
         }

@@ -12,6 +12,7 @@ import com.pamlanjut.evolvance20.domain.usecase.authentication.LoginUseCase
 import com.pamlanjut.evolvance20.domain.usecase.authentication.RegisterUseCase
 import com.pamlanjut.evolvance20.domain.usecase.authentication.VerifyOtpUseCase
 import com.pamlanjut.evolvance20.utils.Result
+import com.pamlanjut.evolvance20.view.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class AuthenticationViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUseCase,
-    private val verifyOtpUseCase: VerifyOtpUseCase
+    private val verifyOtpUseCase: VerifyOtpUseCase,
+    private val appViewModel: AppViewModel
 ) : ViewModel() {
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Idle)
     val loginState: StateFlow<LoginState> = _loginState
@@ -41,12 +43,14 @@ class AuthenticationViewModel @Inject constructor(
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            _loginState.value = LoginState.Loading
+            appViewModel.showLoading()
             try {
                 val token = loginUseCase.execute(email, password)
                 _loginState.value = LoginState.Success(token.accessToken)
+                appViewModel.hideLoading()
             } catch (e: Exception) {
                 _loginState.value = LoginState.Error(e.message ?: "Unknown error")
+                appViewModel.hideLoading()
             }
         }
     }
@@ -55,17 +59,24 @@ class AuthenticationViewModel @Inject constructor(
         request: RegisterRequest
     ) {
         viewModelScope.launch {
-            _registerState.value = RegisterState.Loading
+            appViewModel.showLoading()
 
             if (request.password != request.password_confirmation) {
                 _registerState.value = RegisterState.Error("Password does not match")
+                appViewModel.hideLoading()
                 return@launch
             } else {
                 when(
                     val response = registerUseCase.execute(request)
                 ) {
-                    is Result.Success -> _registerState.value = RegisterState.Success(response.data)
-                    is Result.Error -> _registerState.value = RegisterState.Error(response.message)
+                    is Result.Success -> {
+                        _registerState.value = RegisterState.Success(response.data)
+                        appViewModel.hideLoading()
+                    }
+                    is Result.Error -> {
+                        _registerState.value = RegisterState.Error(response.message)
+                        appViewModel.hideLoading()
+                    }
                 }
             }
         }
@@ -75,15 +86,21 @@ class AuthenticationViewModel @Inject constructor(
         request: VerifyOtpRequest
     ) {
         viewModelScope.launch {
-            _authUiState.value = AuthUiState.Loading
+            appViewModel.showLoading()
 
             when(
                 val response = verifyOtpUseCase.execute(
                     request
                 )
             ) {
-                is Result.Success -> _authUiState.value = AuthUiState.Success(response.data)
-                is Result.Error -> _authUiState.value = AuthUiState.Error(response.message)
+                is Result.Success -> {
+                    _authUiState.value = AuthUiState.Success(response.data)
+                    appViewModel.hideLoading()
+                }
+                is Result.Error -> {
+                    _authUiState.value = AuthUiState.Error(response.message)
+                    appViewModel.hideLoading()
+                }
             }
         }
     }

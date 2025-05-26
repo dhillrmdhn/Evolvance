@@ -72,7 +72,9 @@ fun LandingScreen(
                     .align(Alignment.Center)
             )
             IconButton(
-                onClick = {},
+                onClick = {
+                    if (count == 0) navController.navigate("start") else viewModel.decrement()
+                },
                 modifier = Modifier
                     .size(30.dp)
             ) {
