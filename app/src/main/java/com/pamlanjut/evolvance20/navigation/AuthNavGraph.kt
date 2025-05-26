@@ -18,7 +18,7 @@ fun NavGraphBuilder.authNavGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = "auth/register-otp",
+        startDestination = "auth/login",
         route = "auth"
     ) {
         composable("auth/register") { backStackEntry ->

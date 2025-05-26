@@ -3,6 +3,7 @@ package com.pamlanjut.evolvance20.data.repository.authentication
 import com.pamlanjut.evolvance20.data.remote.api.RegisterResponse
 import com.pamlanjut.evolvance20.domain.model.AuthTokenModel
 import com.pamlanjut.evolvance20.utils.Result
+import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     suspend fun login(
@@ -14,7 +15,7 @@ interface AuthRepository {
         token: String
     )
 
-    suspend fun getToken(): String?
+    fun getToken(): Flow<String?>
 
     suspend fun register(
         name: String,
