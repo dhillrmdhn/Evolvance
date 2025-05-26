@@ -239,13 +239,6 @@ fun LoginScreen(
                         )
                     }
                 }
-
-                when (loginState) {
-                    is LoginState.Loading -> LoadingScreen()
-                    is LoginState.Success -> Text("Logged in! Token: ${(loginState as LoginState.Success).token}")
-                    is LoginState.Error -> Text("Error: ${(loginState as LoginState.Error)}", color = Color.Red)
-                    else -> {}
-                }
             }
         }
     }

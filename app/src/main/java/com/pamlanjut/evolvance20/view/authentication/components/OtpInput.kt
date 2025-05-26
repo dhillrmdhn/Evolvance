@@ -7,24 +7,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtpInput(
     otp: List<Int?>,
-    onOtpChange: (List<Int?>) -> Unit
+    onOtpChange: (List<Int?>) -> Unit,
+    isError: Boolean
 ) {
     val focusRequest = List(6) { FocusRequester() }
 
@@ -33,12 +39,10 @@ fun OtpInput(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        otp.forEachIndexed{
-            index, digit ->
-                OutlinedTextField(
+        otp.forEachIndexed { index, digit ->
+            OutlinedTextField(
                 value = digit?.toString() ?: "",
-                onValueChange = {
-                    newDigit ->
+                onValueChange = { newDigit ->
                     if (newDigit.length <= 1) {
                         val digitList = otp.toMutableList()
                         if (newDigit.isNotEmpty() && newDigit[0].isDigit()) {
@@ -59,16 +63,17 @@ fun OtpInput(
                     }
                 },
                 singleLine = true,
+                isError = isError,
                 textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .width(48.dp)
                     .height(56.dp)
                     .focusRequester(focusRequest[index]),
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number
-                    )
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number
                 )
+            )
         }
     }
 

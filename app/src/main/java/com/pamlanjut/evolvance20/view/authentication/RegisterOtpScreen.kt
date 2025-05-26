@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.view.authentication.components.OtpInput
@@ -53,14 +54,18 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun RegisterOtpScreen(
-    viewModel: AuthenticationViewModel
+    viewModel: AuthenticationViewModel,
+    navController: NavController
 ) {
+    // Otp
     val otpDigits = remember { mutableStateListOf<Int?>(null, null, null, null, null, null) }
     val user by viewModel.registerRequestState.collectAsState()
-    var otpDigitsString = otpDigits.joinToString("")
+    val otpDigitsString = otpDigits.joinToString("")
 
+    // Local State
     val authUiState by viewModel.authUiState.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
 
     // Timeleft
     var timeleft by remember { mutableIntStateOf(600) }
@@ -88,7 +93,9 @@ fun RegisterOtpScreen(
             painter = painterResource(id = R.drawable.mainbackground),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize().alpha(0.7f)
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.7f)
         )
         Column(
             Modifier
@@ -163,39 +170,34 @@ fun RegisterOtpScreen(
                         onOtpChange = {
                             otpDigits.clear()
                             otpDigits.addAll(it)
-                        }
+                        },
+                        isError = isError
                     )
+
+                    if (isError) {
+                        Text(
+                            "Kode OTP salah, Silahkan coba lagi",
+                            color = Color.Red
+                        )
+                    }
                 }
             }
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row (
-                    horizontalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    Text(
-                        "Sudah memiliki akun?",
-                        style = TextStyle(
-                            fontSize = 12.sp
-                        )
-                    )
-                    Text(
-                        "Masuk",
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colorResource(R.color.main_color)
-                        ),
-                        modifier = Modifier.clickable {  }
-                    )
-                }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        navController.popBackStack()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
-                        .border(0.5.dp, colorResource(R.color.main_color), RoundedCornerShape(12.dp)),
+                        .border(
+                            0.5.dp,
+                            colorResource(R.color.main_color),
+                            RoundedCornerShape(12.dp)
+                        ),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(id = R.color.white),
@@ -242,17 +244,21 @@ fun RegisterOtpScreen(
                 )
             }
 
-            when (authUiState) {
-                is AuthUiState.Success -> {
-                    LaunchedEffect(Unit) {
+            LaunchedEffect(authUiState) {
+                when (authUiState) {
+                    is AuthUiState.Success -> {
                         showDialog = true
                         delay(100)
-                        viewModel.resetRegisterState()
+                        viewModel.resetState()
                     }
+                    is AuthUiState.Error -> {
+                        isError = true
+                        viewModel.resetState()
+                    }
+                    else -> {}
                 }
-                is AuthUiState.Loading -> LoadingScreen()
-                else -> {}
             }
+
         }
     }
 }

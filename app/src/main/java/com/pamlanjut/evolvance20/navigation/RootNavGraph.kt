@@ -11,7 +11,7 @@ fun RootNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "auth"
+        startDestination = "landing"
     ) {
         landingNavGraph(navController = navController)
         authNavGraph(navController = navController)

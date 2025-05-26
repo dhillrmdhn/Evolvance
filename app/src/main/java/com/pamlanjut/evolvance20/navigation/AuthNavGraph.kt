@@ -18,7 +18,7 @@ fun NavGraphBuilder.authNavGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = "auth/login",
+        startDestination = "auth/register-otp",
         route = "auth"
     ) {
         composable("auth/register") { backStackEntry ->
@@ -52,7 +52,8 @@ fun NavGraphBuilder.authNavGraph(
             val authViewModel: AuthenticationViewModel = hiltViewModel(parentEntry)
 
             RegisterOtpScreen(
-                viewModel = authViewModel
+                viewModel = authViewModel,
+                navController = navController
             )
         }
 
