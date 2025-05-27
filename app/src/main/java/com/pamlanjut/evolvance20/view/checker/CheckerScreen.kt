@@ -21,7 +21,7 @@ fun CheckerScreen(
     LaunchedEffect(isLogin) {
         delay(1000)
         navController.navigate(
-            if (isLogin) "landing" else "auth"
+            if (isLogin) "home" else "landing"
         ) {
             popUpTo("checker") { inclusive = true }
         }
