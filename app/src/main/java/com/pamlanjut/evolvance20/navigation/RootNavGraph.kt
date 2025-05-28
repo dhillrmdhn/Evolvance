@@ -19,15 +19,12 @@ fun RootNavGraph(
             CheckerScreen(navController)
         }
 
-        landingNavGraph(navController = navController)
-        authNavGraph(navController = navController)
-        homeNavGraph(navController = navController)
+        landingNavGraph(navController)
+        authNavGraph(navController)
+        homeNavGraph(navController)
+        bootcampNavGraph(navController)
 
-        // Composable
-        composable("bootcamp") {
-            LoadingScreen()
-        }
-
+        // Composable Dummy
         composable("mentoring") {
             LoadingScreen()
         }

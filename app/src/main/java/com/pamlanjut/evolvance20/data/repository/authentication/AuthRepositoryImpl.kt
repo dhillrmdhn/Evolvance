@@ -31,6 +31,10 @@ class AuthRepositoryImpl @Inject constructor(
         return preference.getAccessToken()
     }
 
+    override suspend fun clearDataStore() {
+        preference.clearDataStore()
+    }
+
     override suspend fun register(
         name: String,
         email: String,

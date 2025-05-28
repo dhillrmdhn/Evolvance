@@ -1,5 +1,6 @@
 package com.pamlanjut.evolvance20.view.authentication
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -74,7 +75,9 @@ fun LoginScreen(
             painter = painterResource(id = R.drawable.mainbackground),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize().alpha(0.7f)
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.7f)
         )
 
         Column(
@@ -114,7 +117,7 @@ fun LoginScreen(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Column (
+                Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
@@ -145,7 +148,7 @@ fun LoginScreen(
                     }
                 }
 
-                Column (
+                Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
@@ -194,7 +197,7 @@ fun LoginScreen(
                     Modifier.height(8.dp)
                 )
 
-                Column (
+                Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -217,7 +220,7 @@ fun LoginScreen(
                             "Masuk"
                         )
                     }
-                    Row (
+                    Row(
                         horizontalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
@@ -238,6 +241,25 @@ fun LoginScreen(
                             }
                         )
                     }
+                }
+
+                when (loginState) {
+                    is LoginState.Loading -> {
+                        LoadingScreen()
+                    }
+
+                    is LoginState.Success -> {
+                        navController.navigate("bootcamp")
+                    }
+
+                    is LoginState.Error -> {
+                        Text(
+                            (loginState as LoginState.Error).message,
+                            color = Color.Red
+                        )
+                    }
+
+                    else -> {}
                 }
             }
         }

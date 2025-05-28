@@ -19,9 +19,8 @@ fun CheckerScreen(
 ) {
     val isLogin by viewModel.isLoggedIn.collectAsState()
     LaunchedEffect(isLogin) {
-        delay(1000)
         navController.navigate(
-            if (isLogin) "home" else "landing"
+            if (isLogin) "bootcamp" else "landing"
         ) {
             popUpTo("checker") { inclusive = true }
         }

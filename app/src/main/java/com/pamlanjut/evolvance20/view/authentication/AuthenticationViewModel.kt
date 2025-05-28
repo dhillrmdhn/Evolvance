@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pamlanjut.evolvance20.data.local.AuthPreference
 import com.pamlanjut.evolvance20.data.remote.api.RegisterRequest
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.domain.usecase.authentication.LoginUseCase
@@ -16,11 +17,13 @@ import com.pamlanjut.evolvance20.view.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
+    private val preference: AuthPreference,
     private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUseCase,
     private val verifyOtpUseCase: VerifyOtpUseCase,
@@ -45,6 +48,10 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             appViewModel.showLoading()
             try {
+                if (!preference.getAccessToken().first().isNullOrEmpty()) {
+                    preference.clearDataStore()
+                }
+
                 val token = loginUseCase.execute(email, password)
                 _loginState.value = LoginState.Success(token.accessToken)
                 appViewModel.hideLoading()

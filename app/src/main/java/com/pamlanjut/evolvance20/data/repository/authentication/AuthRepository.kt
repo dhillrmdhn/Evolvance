@@ -17,6 +17,8 @@ interface AuthRepository {
 
     fun getToken(): Flow<String?>
 
+    suspend fun clearDataStore()
+
     suspend fun register(
         name: String,
         email: String,

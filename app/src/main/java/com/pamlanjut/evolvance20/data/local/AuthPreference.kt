@@ -28,4 +28,8 @@ class AuthPreference @Inject constructor(
             it[ACCESS_TOKEN]
         }
     }
+
+    suspend fun clearDataStore() {
+        dataStore.edit { it.clear() }
+    }
 }
