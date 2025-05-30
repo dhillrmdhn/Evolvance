@@ -9,11 +9,12 @@ import com.pamlanjut.evolvance20.view.components.LoadingScreen
 
 @Composable
 fun RootNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
-        startDestination = "checker"
+        startDestination = startDestination
     ) {
         composable("checker") {
             CheckerScreen(navController)

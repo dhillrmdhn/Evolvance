@@ -17,7 +17,7 @@ class CheckerViewModel @Inject constructor(
     private val appViewModel: AppViewModel,
     private val isLoggedInUseCase: IsLoggedInUseCase
 ) : ViewModel() {
-    val isLoggedIn: StateFlow<Boolean> = isLoggedInUseCase()
+    val isLoggedIn: StateFlow<Boolean?> = isLoggedInUseCase(null)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,9 +26,11 @@ import com.pamlanjut.evolvance20.ui.theme.Evolvance20Theme
 import com.pamlanjut.evolvance20.view.AppViewModel
 import com.pamlanjut.evolvance20.view.authentication.LoginScreen
 import com.pamlanjut.evolvance20.view.authentication.RegisterScreen
+import com.pamlanjut.evolvance20.view.checker.CheckerViewModel
 import com.pamlanjut.evolvance20.view.components.LoadingScreen
 import com.pamlanjut.evolvance20.view.landing.LandingScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -42,15 +48,26 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RootScreen(
     navController: NavHostController,
-    appViewModel: AppViewModel = hiltViewModel()
 ) {
-    val isLoading by appViewModel.isLoading.collectAsState()
+    val viewModel: CheckerViewModel = hiltViewModel()
+    val isLogin by viewModel.isLoggedIn.collectAsState()
+    var showContent by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isLogin) {
+        if (isLogin != null) {
+            delay(100)
+            showContent = true
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        RootNavGraph(navController = navController)
-
-        if (isLoading) {
+        if (!showContent || isLogin == null) {
             LoadingScreen()
+        } else {
+            RootNavGraph(
+                navController = navController,
+                startDestination = if (isLogin!!) "bootcamp" else "landing"
+            )
         }
     }
 }

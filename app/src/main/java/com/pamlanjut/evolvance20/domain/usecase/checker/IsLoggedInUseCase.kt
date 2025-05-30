@@ -8,7 +8,7 @@ import javax.inject.Inject
 class IsLoggedInUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    operator fun invoke(): Flow<Boolean> {
+    operator fun invoke(nothing: Nothing?): Flow<Boolean> {
         return repository.getToken().map {
             !it.isNullOrEmpty()
         }
