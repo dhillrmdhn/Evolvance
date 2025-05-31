@@ -1,8 +1,7 @@
 package com.pamlanjut.evolvance20.data.repository.authentication
 
-import com.pamlanjut.evolvance20.data.remote.api.RegisterResponse
 import com.pamlanjut.evolvance20.domain.model.AuthTokenModel
-import com.pamlanjut.evolvance20.utils.Result
+import com.pamlanjut.evolvance20.utils.helper.Result
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

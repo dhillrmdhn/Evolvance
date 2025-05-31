@@ -1,5 +1,6 @@
 package com.pamlanjut.evolvance20.view.bootcamp.components
 
+import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,12 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.pamlanjut.evolvance20.R
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
 @Composable
-fun TopBar() {
+fun TopBar(
+    image: String
+) {
     Box(
         Modifier
             .fillMaxWidth()
@@ -58,8 +61,17 @@ fun TopBar() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            Image(
-                painter = painterResource(R.drawable.example_bannerbootcamp),
+//            Image(
+//                painter = painterResource(R.drawable.example_bannerbootcamp),
+//                contentDescription = "Image",
+//                modifier = Modifier
+//                    .height(160.dp)
+//                    .fillMaxWidth(0.85f)
+//                    .clip(RoundedCornerShape(12.dp)),
+//                contentScale = ContentScale.Crop
+//            )
+            AsyncImage(
+                model = image,
                 contentDescription = "Image",
                 modifier = Modifier
                     .height(160.dp)

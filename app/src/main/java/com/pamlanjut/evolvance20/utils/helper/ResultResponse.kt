@@ -1,4 +1,4 @@
-package com.pamlanjut.evolvance20.utils
+package com.pamlanjut.evolvance20.utils.helper
 
 sealed class Result<out T> {
     data class Success<out T>(val data: T) : Result<T>()

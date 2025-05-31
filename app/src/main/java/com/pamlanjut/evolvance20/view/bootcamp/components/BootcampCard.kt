@@ -2,6 +2,7 @@ package com.pamlanjut.evolvance20.view.bootcamp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,14 +30,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.pamlanjut.evolvance20.R
+import com.pamlanjut.evolvance20.domain.model.Softskill
 
-@Preview(showBackground = true)
 @Composable
-fun BootcampCard() {
+fun BootcampCard(
+    image: String,
+    title: String,
+    category: String,
+    softskills: List<Softskill>,
+    onClick: () -> Unit = {}
+) {
     Card(
         Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            },
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -48,13 +59,11 @@ fun BootcampCard() {
             Box(
                 Modifier.height(100.dp)
             ) {
-                Image(
-                    painter = painterResource(
-                        id = R.drawable.ic_launcher_background,
-                    ),
-                    modifier = Modifier.fillMaxSize(),
+                AsyncImage(
+                    model = image,
                     contentDescription = "Bootcamp Image",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
             Column(
@@ -63,12 +72,12 @@ fun BootcampCard() {
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
-                    "Ready2Work: Soft Skill Accelerator by Nestlé",
+                    title,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp
                 )
                 Text(
-                    "Bisnis dan Management",
+                    category,
                     Modifier
                         .clip(RoundedCornerShape(3.dp))
                         .background(colorResource(R.color.secondary_color))
@@ -81,16 +90,17 @@ fun BootcampCard() {
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    repeat(4) {
+                    softskills.forEach {
+                        unit ->
                         Text(
-                            "Bismillah",
-                            Modifier
-                                .clip(RoundedCornerShape(3.dp))
-                                .background(colorResource(R.color.third_color))
-                                .padding(12.dp, 4.dp),
-                            color = Color.White,
-                            fontSize = 8.sp
-                        )
+                        unit.name,
+                        Modifier
+                            .clip(RoundedCornerShape(3.dp))
+                            .background(colorResource(R.color.third_color))
+                            .padding(12.dp, 4.dp),
+                        color = Color.White,
+                        fontSize = 8.sp
+                    )
                     }
                 }
             }

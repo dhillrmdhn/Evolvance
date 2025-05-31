@@ -4,12 +4,10 @@ import com.pamlanjut.evolvance20.data.local.AuthPreference
 import com.pamlanjut.evolvance20.data.remote.api.AuthApi
 import com.pamlanjut.evolvance20.data.remote.api.LoginRequest
 import com.pamlanjut.evolvance20.data.remote.api.RegisterRequest
-import com.pamlanjut.evolvance20.data.remote.api.RegisterResponse
 import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.domain.model.AuthTokenModel
-import com.pamlanjut.evolvance20.utils.Result
+import com.pamlanjut.evolvance20.utils.helper.Result
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

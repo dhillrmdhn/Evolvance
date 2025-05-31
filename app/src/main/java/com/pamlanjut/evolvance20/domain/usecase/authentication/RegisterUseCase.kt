@@ -1,9 +1,8 @@
 package com.pamlanjut.evolvance20.domain.usecase.authentication
 
 import com.pamlanjut.evolvance20.data.remote.api.RegisterRequest
-import com.pamlanjut.evolvance20.data.remote.api.RegisterResponse
 import com.pamlanjut.evolvance20.data.repository.authentication.AuthRepository
-import com.pamlanjut.evolvance20.utils.Result
+import com.pamlanjut.evolvance20.utils.helper.Result
 import javax.inject.Inject
 
 class RegisterUseCase @Inject constructor(

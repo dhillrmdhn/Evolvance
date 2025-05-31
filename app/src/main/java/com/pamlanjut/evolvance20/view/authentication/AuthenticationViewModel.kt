@@ -1,9 +1,5 @@
 package com.pamlanjut.evolvance20.view.authentication
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pamlanjut.evolvance20.data.local.AuthPreference
@@ -12,7 +8,7 @@ import com.pamlanjut.evolvance20.data.remote.api.VerifyOtpRequest
 import com.pamlanjut.evolvance20.domain.usecase.authentication.LoginUseCase
 import com.pamlanjut.evolvance20.domain.usecase.authentication.RegisterUseCase
 import com.pamlanjut.evolvance20.domain.usecase.authentication.VerifyOtpUseCase
-import com.pamlanjut.evolvance20.utils.Result
+import com.pamlanjut.evolvance20.utils.helper.Result
 import com.pamlanjut.evolvance20.view.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
