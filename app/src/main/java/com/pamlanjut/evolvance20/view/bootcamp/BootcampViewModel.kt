@@ -41,7 +41,6 @@ class BootcampViewModel @Inject constructor(
     fun fetchBootcampRegistered() {
         viewModelScope.launch {
             getBootcampDataUseCase().collect { result ->
-//                println("Received result for registered: $result")
                 _registeredState.value = result
             }
         }

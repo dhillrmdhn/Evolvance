@@ -39,7 +39,7 @@ fun NavGraphBuilder.bootcampNavGraph(
             val viewModel: BootcampViewModel = hiltViewModel(parentEntry)
             val id = backStackEntry.arguments?.getInt("id") ?: return@composable
 
-            DetailRegisterBootcampScreen(id, viewModel)
+            DetailRegisterBootcampScreen(id, viewModel, navController)
         }
 
         composable(

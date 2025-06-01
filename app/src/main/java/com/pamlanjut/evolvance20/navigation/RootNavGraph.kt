@@ -24,6 +24,7 @@ fun RootNavGraph(
         authNavGraph(navController)
         homeNavGraph(navController)
         bootcampNavGraph(navController)
+        checkoutNavGraph(navController)
 
         // Composable Dummy
         composable("mentoring") {

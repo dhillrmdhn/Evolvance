@@ -3,6 +3,7 @@ package com.pamlanjut.evolvance20.di
 import android.content.Context
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.data.remote.api.BootcampApi
+import com.pamlanjut.evolvance20.data.remote.api.CheckoutApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,5 +42,11 @@ object NetworkModule {
     @Singleton
     fun provideBootcampApi(retrofit: Retrofit): BootcampApi {
         return retrofit.create(BootcampApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckoutApi(retrofit: Retrofit): CheckoutApi {
+        return retrofit.create(CheckoutApi::class.java)
     }
 }

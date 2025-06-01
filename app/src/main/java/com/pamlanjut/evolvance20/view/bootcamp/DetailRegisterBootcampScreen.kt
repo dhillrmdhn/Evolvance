@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.domain.model.Bootcamp
 import com.pamlanjut.evolvance20.utils.helper.Resource
@@ -39,7 +40,8 @@ import com.pamlanjut.evolvance20.view.components.layout.BootcampLayout
 @Composable
 fun DetailRegisterBootcampScreen(
     id: Int,
-    viewModel: BootcampViewModel
+    viewModel: BootcampViewModel,
+    navController: NavController
 ) {
     val data by viewModel.state.collectAsState()
     when(data) {
@@ -49,7 +51,8 @@ fun DetailRegisterBootcampScreen(
             val bootcamps = (data as Resource.Success<List<Bootcamp>>).data.find { it.id == id }
             if (bootcamps != null) {
                 Screen(
-                    bootcamp = bootcamps
+                    bootcamp = bootcamps,
+                    navController
                 )
             } else {
                 Text("Bootcamp tidak ditemukan")
@@ -63,7 +66,8 @@ fun DetailRegisterBootcampScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Screen(
-    bootcamp: Bootcamp
+    bootcamp: Bootcamp,
+    navController: NavController
 ) {
     val listBenefitsData = listOf(
         BenefitsData("Sertifikasi", R.drawable.icon_trophy),
@@ -142,7 +146,9 @@ fun Screen(
 
                 //Button
                 Button(
-                    onClick = {},
+                    onClick = {
+                        navController.navigate("checkout/index/${bootcamp.id}")
+                    },
                     text = "Daftar"
                 )
             }
