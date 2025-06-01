@@ -40,7 +40,7 @@ fun MentoringScreen() {
 }
 
 @Composable
-fun ScreenLayout() {
+private fun ScreenLayout() {
     Column(
         Modifier
             .fillMaxSize()
