@@ -25,12 +25,9 @@ fun RootNavGraph(
         homeNavGraph(navController)
         bootcampNavGraph(navController)
         checkoutNavGraph(navController)
+        mentoringNavGraph(navController)
 
         // Composable Dummy
-        composable("mentoring") {
-            LoadingScreen()
-        }
-
         composable("cvscooring") {
             LoadingScreen()
         }

@@ -66,7 +66,7 @@ fun RootScreen(
         } else {
             RootNavGraph(
                 navController = navController,
-                startDestination = if (isLogin!!) "bootcamp" else "landing"
+                startDestination = if (isLogin!!) "mentoring" else "landing"
             )
         }
     }
