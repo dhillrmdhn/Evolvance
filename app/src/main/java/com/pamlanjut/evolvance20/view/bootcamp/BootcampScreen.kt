@@ -111,7 +111,9 @@ fun BootcampScreen(
                                     val bootcamp = bootcamps[it]
                                     RegisteredCard(
                                         bootcamp,
-                                        onClick = {}
+                                        onClick = {
+                                            navController.navigate("bootcamp/content/${bootcamp.id}")
+                                        }
                                     )
                                 }
                             }

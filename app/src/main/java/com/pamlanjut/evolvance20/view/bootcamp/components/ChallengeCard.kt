@@ -42,17 +42,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pamlanjut.evolvance20.R
+import com.pamlanjut.evolvance20.domain.model.Week
+import com.pamlanjut.evolvance20.utils.helper.toCapitalizedWords
 import com.pamlanjut.evolvance20.view.components.VideoPlayer
 
 @Composable
-fun ChallengeCard() {
+fun ChallengeCard(
+    week: Week,
+    index: Int
+) {
     var visible by remember { mutableStateOf(false) }
 
     Column(
         Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Color.White)
+            .background(
+                if (week.status == "belum tersedia") Color.Gray else Color.White
+            )
             .border(1.dp, Color.LightGray, RoundedCornerShape(16.dp))
             .clickable {
                 visible = !visible
@@ -68,15 +75,17 @@ fun ChallengeCard() {
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 Text(
-                    "Minggu #1: Nama Tantangan",
+                    "Minggu #${(index + 1).toString()}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = colorResource(R.color.main_color)
+                    color = if (week.status == "belum tersedia") Color.White else colorResource(R.color.main_color)
                 )
                 Text(
-                    "Selesai",
+                    text = week.status.toCapitalizedWords(),
                     fontWeight = FontWeight.Bold,
-                    color = Color.Green
+                    color = if (week.status == "belum tersedia") Color.Red
+                    else if (week.status == "Dalam Pengerjaan") Color(0xFFDFB400)
+                    else Color.Green
                 )
             }
             Icon(
@@ -85,13 +94,13 @@ fun ChallengeCard() {
                 tint = Color.White,
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(color = colorResource(R.color.main_color))
+                    .background(color = if (week.status == "belum tersedia") Color.Gray else colorResource(R.color.main_color))
                     .padding(3.dp)
             )
         }
 
         AnimatedVisibility(
-            visible = visible,
+            visible = if (week.status == "belum tersedia") false else visible,
             enter = expandVertically() + fadeIn(),
             exit = shrinkVertically() + fadeOut(),
             modifier = Modifier.padding(top = 16.dp)
@@ -111,7 +120,7 @@ fun ChallengeCard() {
 
                 // Description
                 Text("Penugasan", fontWeight = FontWeight.Bold)
-                Text("1 Penugasan")
+                Text(week.assignment?.description ?: "")
 
                 // Pengumpulan
                 Text("Pengumpulan", fontWeight = FontWeight.Bold)

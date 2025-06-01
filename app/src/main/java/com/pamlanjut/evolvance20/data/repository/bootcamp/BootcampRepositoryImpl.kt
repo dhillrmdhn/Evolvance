@@ -3,6 +3,7 @@ package com.pamlanjut.evolvance20.data.repository.bootcamp
 import com.pamlanjut.evolvance20.data.remote.api.BootcampApi
 import com.pamlanjut.evolvance20.data.repository.authentication.AuthRepository
 import com.pamlanjut.evolvance20.domain.model.Bootcamp
+import com.pamlanjut.evolvance20.domain.model.BootcampDetail
 import com.pamlanjut.evolvance20.utils.mapper.toDomain
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -30,6 +31,32 @@ class BootcampRepositoryImpl @Inject constructor(
             return response.body()?.map { it.toDomain() } ?: emptyList()
         } else {
             throw Exception("Failed to fetch registered bootcamps data")
+        }
+    }
+
+    override suspend fun getBootcampDetail(id: Int): BootcampDetail {
+        val token = authRepository.getToken().firstOrNull() ?: ""
+
+        val response = api.getBootcampDetail(
+            "Bearer $token", id
+        )
+
+        if (response.isSuccessful) {
+            return response.body()?.data?.toDomain() ?: BootcampDetail(
+                id = 0,
+                image = "",
+                name = "",
+                description = "",
+                startDate = "",
+                endDate = "",
+                price = "",
+                kuota = 0,
+                tipePembelajaran = "",
+                bidangPekerjaan = "",
+                weeks = emptyList()
+            )
+        } else {
+            throw Exception("Failed to fetch bootcamps data")
         }
     }
 

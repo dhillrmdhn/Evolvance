@@ -41,5 +41,19 @@ fun NavGraphBuilder.bootcampNavGraph(
 
             DetailRegisterBootcampScreen(id, viewModel)
         }
+
+        composable(
+            route = "bootcamp/content/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            backStackEntry ->
+            val parentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry("bootcamp")
+            }
+            val viewModel: BootcampViewModel = hiltViewModel(parentEntry)
+            val id = backStackEntry.arguments?.getInt("id") ?: return@composable
+
+            DetailContentBootcamp(id, viewModel)
+        }
     }
 }
