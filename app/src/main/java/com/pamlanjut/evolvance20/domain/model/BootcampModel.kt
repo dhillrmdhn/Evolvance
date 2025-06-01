@@ -11,7 +11,7 @@ data class Bootcamp(
     val kuota: Int,
     val tipePembelajaran: String,
     val bidangPekerjaan: String,
-    val softskills: List<Softskill>
+    val softskills: List<Softskill>? = null
 )
 
 data class Softskill(

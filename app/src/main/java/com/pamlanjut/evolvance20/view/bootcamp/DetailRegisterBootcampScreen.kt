@@ -147,7 +147,8 @@ fun Screen(
                 )
             }
         },
-        image = bootcamp.image
+        image = bootcamp.image,
+        name = bootcamp.name
     )
 }
 

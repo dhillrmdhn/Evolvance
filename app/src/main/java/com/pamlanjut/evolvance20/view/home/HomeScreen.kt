@@ -29,7 +29,7 @@ fun HomeScreen(
         "https://images.unsplash.com/photo-1519125323398-675f0ddb6308"
     )
 
-    MainLayout {
+    MainLayout(showBottomBar = true, content = {
         Column(
             Modifier
                 .fillMaxSize()
@@ -53,5 +53,5 @@ fun HomeScreen(
                 navController
             )
         }
-    }
+    })
 }

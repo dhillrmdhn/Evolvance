@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetBootcampDataUseCase @Inject constructor(
+class GetBootcampRegisteredUseCase @Inject constructor(
     private val repository: BootcampRepository
 ) {
     operator fun invoke(): Flow<Resource<List<Bootcamp>>> = flow {
         emit(Resource.Loading)
 
         try {
-            val data = repository.getBootcampsData()
+            val data = repository.getBootcampRegistered()
             emit(Resource.Success(data))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unexpected error"))

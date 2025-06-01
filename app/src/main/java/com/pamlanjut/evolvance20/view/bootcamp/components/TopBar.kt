@@ -35,7 +35,8 @@ import com.pamlanjut.evolvance20.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    image: String
+    image: String,
+    name: String
 ) {
     Box(
         Modifier
@@ -61,15 +62,6 @@ fun TopBar(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-//            Image(
-//                painter = painterResource(R.drawable.example_bannerbootcamp),
-//                contentDescription = "Image",
-//                modifier = Modifier
-//                    .height(160.dp)
-//                    .fillMaxWidth(0.85f)
-//                    .clip(RoundedCornerShape(12.dp)),
-//                contentScale = ContentScale.Crop
-//            )
             AsyncImage(
                 model = image,
                 contentDescription = "Image",
@@ -86,7 +78,7 @@ fun TopBar(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    "Telkom Future Talent Bootcamp",
+                    name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     color = Color.White

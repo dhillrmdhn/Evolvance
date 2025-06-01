@@ -43,7 +43,8 @@ import com.pamlanjut.evolvance20.view.bootcamp.components.TopBar
 @Composable
 fun BootcampLayout(
     content: @Composable () -> Unit,
-    image: String
+    image: String,
+    name: String
 ) {
     val scrollState = rememberLazyListState()
     val density = LocalDensity.current
@@ -75,7 +76,7 @@ fun BootcampLayout(
                 contentPadding = innerPadding
             ) {
                 item {
-                    TopBar(image)
+                    TopBar(image, name)
                 }
 
                 item {

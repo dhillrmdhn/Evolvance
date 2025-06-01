@@ -16,7 +16,7 @@ fun BootcampDto.toDomain(): Bootcamp = Bootcamp(
     kuota = kuota,
     tipePembelajaran = tipe_pembelajaran,
     bidangPekerjaan = bidang_pekerjaan,
-    softskills = softskills.map { it.toDomain() }
+    softskills = softskills?.map { it.toDomain() }
 )
 
 fun SoftskillDto.toDomain(): Softskill = Softskill(

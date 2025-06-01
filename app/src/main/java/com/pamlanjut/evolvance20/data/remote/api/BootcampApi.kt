@@ -9,6 +9,11 @@ interface BootcampApi {
     suspend fun getBootcampData(
         @Header("Authorization") token: String
     ): Response<BootcampResponse>
+
+    @GET("bootcamps/my")
+    suspend fun getBootcampRegistered(
+        @Header("Authorization") token: String
+    ): Response<List<BootcampDto>>
 }
 
 data class BootcampResponse(
@@ -27,7 +32,7 @@ data class BootcampDto(
     val kuota: Int,
     val tipe_pembelajaran: String,
     val bidang_pekerjaan: String,
-    val softskills: List<SoftskillDto>
+    val softskills: List<SoftskillDto>? = null
 )
 
 data class SoftskillDto(

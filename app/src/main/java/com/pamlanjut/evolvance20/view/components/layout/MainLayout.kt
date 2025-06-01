@@ -18,7 +18,8 @@ import com.pamlanjut.evolvance20.view.components.TopBar
 
 @Composable
 fun MainLayout(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    showBottomBar: Boolean = true
 ) {
     Box(
         Modifier.fillMaxSize()
@@ -38,10 +39,12 @@ fun MainLayout(
             bottomBar = {}
         )
 
-        BottomNavBar(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 30.dp)
-        )
+        if (showBottomBar) {
+            BottomNavBar(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 30.dp)
+            )
+        }
     }
 }
