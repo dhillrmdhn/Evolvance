@@ -49,7 +49,7 @@ fun RegisterTnCScreen(
             .fillMaxSize()
     ){
         Image(
-            painter = painterResource(id = R.drawable.mainbackground),
+            painter = painterResource(id = R.drawable.background_auth),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize().alpha(0.7f)

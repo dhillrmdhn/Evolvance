@@ -77,7 +77,7 @@ fun RegisterScreen(
         Modifier.fillMaxSize()
     ){
         Image(
-            painter = painterResource(id = R.drawable.mainbackground),
+            painter = painterResource(id = R.drawable.background_auth),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

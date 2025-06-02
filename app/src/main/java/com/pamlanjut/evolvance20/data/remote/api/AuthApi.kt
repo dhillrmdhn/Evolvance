@@ -1,8 +1,11 @@
 package com.pamlanjut.evolvance20.data.remote.api
 
 import com.google.gson.annotations.SerializedName
+import com.pamlanjut.evolvance20.domain.model.UserModel
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthApi {
@@ -20,6 +23,11 @@ interface AuthApi {
     suspend fun verifyOtp(
         @Body request: VerifyOtpRequest
     ): Response<RegisterResponse>
+
+    @GET("users")
+    suspend fun getUsers(
+        @Header("Authorization") token: String
+    ): Response<UserResponse>
 }
 
 data class LoginRequest(
@@ -47,4 +55,9 @@ data class RegisterResponse(
 data class VerifyOtpRequest(
     val email: String,
     val code: String
+)
+
+data class UserResponse(
+    val success: Boolean,
+    val data: UserModel
 )

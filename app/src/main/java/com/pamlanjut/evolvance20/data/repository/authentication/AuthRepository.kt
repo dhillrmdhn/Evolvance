@@ -1,6 +1,7 @@
 package com.pamlanjut.evolvance20.data.repository.authentication
 
 import com.pamlanjut.evolvance20.domain.model.AuthTokenModel
+import com.pamlanjut.evolvance20.domain.model.UserModel
 import com.pamlanjut.evolvance20.utils.helper.Result
 import kotlinx.coroutines.flow.Flow
 
@@ -29,4 +30,6 @@ interface AuthRepository {
         email: String,
         code: String
     ): Result<String>
+
+    suspend fun getUser(): UserModel
 }
