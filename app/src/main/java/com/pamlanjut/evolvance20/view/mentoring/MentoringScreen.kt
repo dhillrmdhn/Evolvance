@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.data.local.static.MentoringDataList
 import com.pamlanjut.evolvance20.view.components.SearchBox
 import com.pamlanjut.evolvance20.view.components.layout.MainLayout
@@ -30,17 +32,26 @@ import com.pamlanjut.evolvance20.view.mentoring.components.HeaderCard
 import com.pamlanjut.evolvance20.view.mentoring.components.MentoringCard
 
 @Composable
-fun MentoringScreen() {
+fun MentoringScreen(
+    navController: NavController,
+    viewModel: MentoringViewModel
+) {
     MainLayout(
         content = {
-            ScreenLayout()
+            ScreenLayout(
+                navController,
+                viewModel
+            )
         },
         showBottomBar = false
     )
 }
 
 @Composable
-private fun ScreenLayout() {
+private fun ScreenLayout(
+    navController: NavController,
+    viewModel: MentoringViewModel
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -75,7 +86,11 @@ private fun ScreenLayout() {
                 index ->
                 val data = MentoringDataList[index]
                 MentoringCard(
-                    data
+                    data,
+                    onClick = {
+                        viewModel.updateBidangPekerjaan(data.name)
+                        navController.navigate("mentoring/detail")
+                    }
                 )
             }
         }

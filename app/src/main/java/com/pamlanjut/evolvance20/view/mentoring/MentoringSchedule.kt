@@ -23,6 +23,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 import com.pamlanjut.evolvance20.view.components.Button
 import com.pamlanjut.evolvance20.view.components.layout.MentoringLayout
@@ -46,16 +49,23 @@ import com.pamlanjut.evolvance20.view.mentoring.components.DatePicker
 import com.pamlanjut.evolvance20.view.mentoring.components.HourPicker
 import java.util.Calendar
 
-@Preview(showBackground = true)
 @Composable
-fun MentoringSchedule() {
+fun MentoringSchedule(
+    navController: NavController,
+    viewModel: MentoringViewModel
+) {
     MentoringLayout(
-        { ScreenLayout() }
+        { ScreenLayout(navController, viewModel) }
     )
 }
 
 @Composable
-private fun ScreenLayout() {
+private fun ScreenLayout(
+    navController: NavController,
+    viewModel: MentoringViewModel
+) {
+    val mentoringData by viewModel.mentoringData.collectAsState()
+
     Column(
         Modifier
             .fillMaxSize()
@@ -65,8 +75,14 @@ private fun ScreenLayout() {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            DatePicker()
-            HourPicker()
+            DatePicker(
+                selectedDate = mentoringData?.tanggal.orEmpty(),
+                onDateSelected = { viewModel.updateTanggal(it) }
+            )
+            HourPicker(
+                selectedTime = mentoringData?.jam.orEmpty(),
+                onTimeSelected = { viewModel.updateWaktu(it) }
+            )
             Column(
                 Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -79,7 +95,7 @@ private fun ScreenLayout() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(45.dp)
-                        .shadow(1.dp, RoundedCornerShape(10.dp))
+                        .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
                         .padding(horizontal = 10.dp, vertical = 6.dp),
                     contentAlignment = Alignment.CenterStart
                 ) {
@@ -141,7 +157,9 @@ private fun ScreenLayout() {
 
         Spacer(Modifier.height(40.dp))
         Button(
-            onClick = {},
+            onClick = {
+                navController.navigate("mentoring/payment")
+            },
             text = "Berikutnya"
         )
     }

@@ -1,6 +1,7 @@
 package com.pamlanjut.evolvance20.view.mentoring.components
 
 import android.app.DatePickerDialog
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,16 +26,18 @@ import androidx.compose.ui.unit.dp
 import java.util.Calendar
 
 @Composable
-fun DatePicker() {
+fun DatePicker(
+    selectedDate: String,
+    onDateSelected: (String) -> Unit
+) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
-    var selectedDate by remember { mutableStateOf("") }
 
     val datePickerDialog = DatePickerDialog(
         context,
         { _, year, month, dayOfMonth ->
             val pickedDate = "$dayOfMonth/${month + 1}/$year"
-            selectedDate = pickedDate
+            onDateSelected(pickedDate)
         },
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH),
@@ -53,7 +56,7 @@ fun DatePicker() {
             Modifier
                 .fillMaxWidth()
                 .height(45.dp)
-                .shadow(1.dp, RoundedCornerShape(10.dp))
+                .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
                 .clickable { datePickerDialog.show() }
                 .padding(horizontal = 10.dp, vertical = 6.dp),
             contentAlignment = Alignment.CenterStart

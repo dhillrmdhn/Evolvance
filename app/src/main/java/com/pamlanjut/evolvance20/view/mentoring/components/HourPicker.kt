@@ -1,5 +1,6 @@
 package com.pamlanjut.evolvance20.view.mentoring.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,10 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HourPicker() {
+fun HourPicker(
+    selectedTime: String,
+    onTimeSelected: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedTime by remember { mutableStateOf("") }
-
     val timeOptions = (7..18).map { hour ->
         "%02d:00 WIB".format(hour)
     }
@@ -44,13 +46,13 @@ fun HourPicker() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(45.dp)
-                .shadow(1.dp, RoundedCornerShape(10.dp))
+                .border(1.dp, Color.Gray, RoundedCornerShape(10.dp))
                 .clickable { expanded = true }
                 .padding(horizontal = 10.dp, vertical = 6.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
-                text = if (selectedTime.isNotEmpty()) selectedTime else "Pilih jam",
+                text = selectedTime.ifEmpty { "Pilih jam" },
                 color = if (selectedTime.isNotEmpty()) Color.Black else Color.Gray
             )
 
@@ -65,7 +67,7 @@ fun HourPicker() {
                     DropdownMenuItem(
                         text = { Text(time) },
                         onClick = {
-                            selectedTime = time
+                            onTimeSelected(time)
                             expanded = false
                         }
                     )
