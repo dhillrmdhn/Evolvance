@@ -163,6 +163,7 @@ fun BootcampScreen(
                 }
             }
         },
-        showBottomBar = false
+        showBottomBar = false,
+        navController
     )
 }

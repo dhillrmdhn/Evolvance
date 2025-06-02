@@ -3,6 +3,7 @@ package com.pamlanjut.evolvance20.view.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,12 +32,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 
-@Preview(showBackground = true)
 @Composable
 fun BottomNavBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     Card(
         modifier = modifier
@@ -56,6 +58,9 @@ fun BottomNavBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
+                Modifier.clickable {
+                    navController.navigate("home")
+                },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
@@ -71,6 +76,9 @@ fun BottomNavBar(
                 )
             }
             Column(
+                Modifier.clickable {
+                    navController.navigate("mentoring/history")
+                },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
@@ -86,6 +94,9 @@ fun BottomNavBar(
                 )
             }
             Column(
+                Modifier.clickable {
+                    navController.navigate("notification")
+                },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {

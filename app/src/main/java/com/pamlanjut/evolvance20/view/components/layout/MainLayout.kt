@@ -13,13 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.view.components.BottomNavBar
 import com.pamlanjut.evolvance20.view.components.TopBar
 
 @Composable
 fun MainLayout(
     content: @Composable () -> Unit,
-    showBottomBar: Boolean = true
+    showBottomBar: Boolean = true,
+    navController: NavController
 ) {
     Box(
         Modifier.fillMaxSize()
@@ -43,7 +45,8 @@ fun MainLayout(
             BottomNavBar(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 30.dp)
+                    .padding(bottom = 30.dp),
+                navController
             )
         }
     }

@@ -55,7 +55,8 @@ fun CheckoutStatus(
                 navController
             )
         },
-        showBottomBar = false
+        showBottomBar = false,
+        navController
     )
 }
 

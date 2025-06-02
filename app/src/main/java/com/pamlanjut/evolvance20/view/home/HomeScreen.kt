@@ -37,7 +37,7 @@ fun HomeScreen(
     )
     val hasBootcamp by viewModel.hasBootcamp.collectAsState()
 
-    MainLayout(showBottomBar = true, content = {
+    MainLayout(showBottomBar = true, navController = navController, content = {
         Column(
             Modifier
                 .fillMaxSize()

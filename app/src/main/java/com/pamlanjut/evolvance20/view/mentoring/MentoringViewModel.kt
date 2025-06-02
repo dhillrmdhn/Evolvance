@@ -85,4 +85,9 @@ class MentoringViewModel @Inject constructor(
         }
     }
 
+    fun setMentoringData(
+        mentoringData: MentoringModel
+    ) {
+        _mentoringData.value = mentoringData
+    }
 }

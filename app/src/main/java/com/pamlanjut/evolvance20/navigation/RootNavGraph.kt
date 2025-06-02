@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.pamlanjut.evolvance20.view.checker.CheckerScreen
 import com.pamlanjut.evolvance20.view.components.LoadingScreen
+import com.pamlanjut.evolvance20.view.mentoring.MentoringScreen
+import com.pamlanjut.evolvance20.view.notifikasi.NotifikasiScreen
 
 @Composable
 fun RootNavGraph(
@@ -38,6 +40,10 @@ fun RootNavGraph(
 
         composable("feedback") {
             LoadingScreen()
+        }
+
+        composable("notification") {
+            NotifikasiScreen(navController)
         }
     }
 }

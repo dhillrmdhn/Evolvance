@@ -46,5 +46,18 @@ fun NavGraphBuilder.mentoringNavGraph(
 
             PaymentMentoring(viewModel)
         }
+
+        composable("mentoring/history") { backStackEntry ->
+            val parentEntry = remember(backStackEntry) {
+                navController.getBackStackEntry("mentoring")
+            }
+            val viewModel: MentoringViewModel = hiltViewModel(parentEntry)
+
+            MentoringScreen(
+                navController,
+                viewModel,
+                true
+            )
+        }
     }
 }

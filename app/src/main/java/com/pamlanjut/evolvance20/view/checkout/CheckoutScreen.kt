@@ -51,7 +51,8 @@ fun CheckoutScreen(
                 selectedPayment, paymentMethod, viewModel, navController
             )
         },
-        showBottomBar = false
+        showBottomBar = false,
+        navController
     )
 }
 

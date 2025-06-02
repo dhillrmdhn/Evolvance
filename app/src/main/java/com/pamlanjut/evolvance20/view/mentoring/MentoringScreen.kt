@@ -16,6 +16,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,24 +38,30 @@ import com.pamlanjut.evolvance20.view.mentoring.components.MentoringCard
 @Composable
 fun MentoringScreen(
     navController: NavController,
-    viewModel: MentoringViewModel
+    viewModel: MentoringViewModel,
+    isHistoryState: Boolean = false
 ) {
     MainLayout(
         content = {
             ScreenLayout(
                 navController,
-                viewModel
+                viewModel,
+                isHistoryState
             )
         },
-        showBottomBar = false
+        showBottomBar = false,
+        navController
     )
 }
 
 @Composable
 private fun ScreenLayout(
     navController: NavController,
-    viewModel: MentoringViewModel
+    viewModel: MentoringViewModel,
+    isHistoryState: Boolean = false
 ) {
+    var isHistory by remember { mutableStateOf(isHistoryState) }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -59,7 +69,11 @@ private fun ScreenLayout(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         // Header
-        HeaderCard()
+        HeaderCard(
+            onClickBidang = { isHistory = false },
+            onClickHistory = { isHistory = true },
+            isHistory = isHistory
+        )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(14.dp)
@@ -74,24 +88,31 @@ private fun ScreenLayout(
         }
 
         // Content
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .weight(1f)
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            horizontalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
-            items(MentoringDataList.size) {
-                index ->
-                val data = MentoringDataList[index]
-                MentoringCard(
-                    data,
-                    onClick = {
-                        viewModel.updateBidangPekerjaan(data.name)
-                        navController.navigate("mentoring/detail")
-                    }
-                )
+        if (isHistory) {
+            MentoringHistoryScreen(
+                navController,
+                viewModel
+            )
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+                horizontalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                items(MentoringDataList.size) {
+                    index ->
+                    val data = MentoringDataList[index]
+                    MentoringCard(
+                        data,
+                        onClick = {
+                            viewModel.updateBidangPekerjaan(data.name)
+                            navController.navigate("mentoring/detail")
+                        }
+                    )
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.pamlanjut.evolvance20.view.mentoring.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pamlanjut.evolvance20.R
 
-@Preview(showBackground = true)
 @Composable
-fun HeaderCard() {
+fun HeaderCard(
+    onClickBidang: () -> Unit,
+    onClickHistory: () -> Unit,
+    isHistory: Boolean = false
+) {
     Row(
         Modifier
             .fillMaxWidth()
@@ -37,36 +41,39 @@ fun HeaderCard() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-            Modifier.weight(1f),
+            Modifier.weight(1f).clickable {
+                onClickBidang()
+            },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
                 text = "Bidang Pekerjaan",
                 fontWeight = FontWeight.Bold,
-                color = colorResource(R.color.main_color)
+                color = if (isHistory) Color.Gray else colorResource(R.color.main_color)
             )
             Box(
                 Modifier
                     .width(50.dp)
                     .height(2.dp)
-                    .background(colorResource(R.color.main_color))
+                    .background(if (isHistory) Color.Gray else colorResource(R.color.main_color))
             )
         }
         Column(
-            Modifier.weight(1f),
+            Modifier.weight(1f).clickable { onClickHistory() },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Text(
                 text = "Riwayat Pembelian",
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = if (isHistory) colorResource(R.color.main_color) else Color.Gray
             )
             Box(
                 Modifier
                     .width(50.dp)
                     .height(2.dp)
-                    .background(Color.Gray)
+                    .background(if (isHistory) colorResource(R.color.main_color) else Color.Gray)
             )
         }
     }
