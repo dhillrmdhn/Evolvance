@@ -27,7 +27,7 @@ fun SelectBar(
     val option = listOf(
         SelectBarOption(R.drawable.icon_bootcamp, "Bootcamp", {navController.navigate("bootcamp")}),
         SelectBarOption(R.drawable.icon_mentoring, "Mentoring", {navController.navigate("mentoring")}),
-        SelectBarOption(R.drawable.icon_cvscooring, "cv-scooring", {navController.navigate("cvscooring")}),
+        SelectBarOption(R.drawable.icon_cvscooring, "CV Scooring", {navController.navigate("cvscooring")}),
         SelectBarOption(R.drawable.icon_career, "Karir", {navController.navigate("career")}),
         SelectBarOption(R.drawable.icon_feedback, "Feedback", {navController.navigate("feedback")})
     )
@@ -50,7 +50,7 @@ fun SelectBar(
                     Modifier.size(50.dp)
                 )
                 Text(
-                    "$it.name",
+                    it.name,
                     fontSize = 13.sp
                 )
             }

@@ -240,7 +240,8 @@ fun RegisterOtpScreen(
                     show = showDialog,
                     onDismiss = {
                         showDialog = false
-                    }
+                    },
+                    navController
                 )
             }
 

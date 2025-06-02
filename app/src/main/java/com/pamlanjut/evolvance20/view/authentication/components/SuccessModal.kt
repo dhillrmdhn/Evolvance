@@ -32,12 +32,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import com.pamlanjut.evolvance20.R
 
 @Composable
 fun SuccessModal(
     show: Boolean,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    navController: NavController
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -81,7 +83,11 @@ fun SuccessModal(
                 }
                 Button(
                     onClick = {
-                        onDismiss()
+                        navController.navigate("auth/login") {
+                            popUpTo("auth") {
+                                inclusive = true
+                            }
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
