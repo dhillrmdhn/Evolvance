@@ -1,5 +1,6 @@
 package com.pamlanjut.evolvance20.view.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pamlanjut.evolvance20.domain.usecase.bootcamp.GetBootcampRegisteredUseCase
@@ -27,7 +28,7 @@ class HomeScreenViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         val hasBootcamp = result.data.isNotEmpty()
-                        _hasBootcamp.value = true
+                        _hasBootcamp.value = hasBootcamp
                     }
                     is Resource.Error -> {
                         _hasBootcamp.value = false

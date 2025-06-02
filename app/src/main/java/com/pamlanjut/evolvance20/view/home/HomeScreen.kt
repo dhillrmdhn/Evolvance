@@ -32,10 +32,8 @@ fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel()
 ) {
     val imageUrls = listOf(
-        "https://images.unsplash.com/photo-1606788075761-19b8a3de3c43",
-        "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-        "https://images.unsplash.com/photo-1491553895911-0055eca6402d",
-        "https://images.unsplash.com/photo-1519125323398-675f0ddb6308"
+        R.drawable.banner_1,
+        R.drawable.banner_2,
     )
     val hasBootcamp by viewModel.hasBootcamp.collectAsState()
 
@@ -44,7 +42,7 @@ fun HomeScreen(
             Modifier
                 .fillMaxSize()
                 .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             // Heading
             Column(
@@ -52,7 +50,7 @@ fun HomeScreen(
             ) {
                 Text(
                     "Event Mendatang",
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
                 BannerCarousel(
@@ -66,6 +64,11 @@ fun HomeScreen(
             )
 
             //TaskNowBar
+            Text(
+                "Target Minggu Ini",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
             if (hasBootcamp) TaskNowCard() else NotAvailableCard()
         }
     })

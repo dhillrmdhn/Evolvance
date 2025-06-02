@@ -57,7 +57,7 @@ fun TopBar() {
             Image(
                 painter = painterResource(R.drawable.background_topbar),
                 contentDescription = "",
-                Modifier.matchParentSize(),
+                Modifier.matchParentSize().clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)),
                 contentScale = ContentScale.Crop
             )
 

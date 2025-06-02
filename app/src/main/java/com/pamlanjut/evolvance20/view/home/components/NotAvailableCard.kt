@@ -39,12 +39,11 @@ fun NotAvailableCard() {
         Image(
             painter = painterResource(R.drawable.icon_exclamation),
             contentDescription = "Exclamation",
-            Modifier.size(75.dp).padding(bottom = 8.dp)
+            Modifier.size(60.dp).padding(bottom = 8.dp)
         )
         Text(
-            "Kamu masih belum mengambil bootcamp apapun. Ayo pelajari sekarang!",
-            textAlign = TextAlign.Center,
-            fontSize = 16.sp
+            "Kamu masih belum mengambil bootcamp apapun. \nAyo pelajari sekarang!",
+            textAlign = TextAlign.Center
         )
     }
 }
