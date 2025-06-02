@@ -1,7 +1,9 @@
 package com.pamlanjut.evolvance20.view.bootcamp
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pamlanjut.evolvance20.data.remote.api.FileUpload
 import com.pamlanjut.evolvance20.domain.model.Bootcamp
 import com.pamlanjut.evolvance20.domain.model.BootcampDetail
 import com.pamlanjut.evolvance20.domain.usecase.bootcamp.GetBootcampDataDetailUseCase
@@ -53,6 +55,55 @@ class BootcampViewModel @Inject constructor(
         viewModelScope.launch {
             getBootcampDetailUseCase(id).collect { result ->
                 _detailState.value = result
+            }
+        }
+    }
+
+    private val _fileUploadStates = MutableStateFlow<Map<Int, FileUpload>>(emptyMap())
+    val fileUploadStates: StateFlow<Map<Int, FileUpload>> = _fileUploadStates.asStateFlow()
+    fun getFileUploadState(weekId: Int): FileUpload {
+        return _fileUploadStates.value[weekId] ?: FileUpload()
+    }
+    fun onFileSelected(weekId: Int, uri: Uri, fileName: String) {
+        val currentStates = _fileUploadStates.value.toMutableMap()
+        currentStates[weekId] = FileUpload(
+            selectedFileUri = uri,
+            selectedFileName = fileName,
+            errorMessage = null
+        )
+        _fileUploadStates.value = currentStates
+    }
+    fun uploadAssignmentFile(weekId: Int, bootcampId: Int? = null) {
+        val currentState = getFileUploadState(weekId)
+        if (currentState.selectedFileUri == null) return
+        val currentStates = _fileUploadStates.value.toMutableMap()
+        currentStates[weekId] = currentState.copy(isUploading = true, errorMessage = null)
+        _fileUploadStates.value = currentStates
+
+        viewModelScope.launch {
+            try {
+                kotlinx.coroutines.delay(1500)
+
+                println("Dummy Upload Success:")
+                println("Week ID: $weekId")
+                println("Bootcamp ID: $bootcampId")
+                println("File Name: ${currentState.selectedFileName}")
+                println("File URI: ${currentState.selectedFileUri}")
+
+                val updatedStates = _fileUploadStates.value.toMutableMap()
+                updatedStates[weekId] = currentState.copy(
+                    isUploading = false,
+                    uploadSuccess = true
+                )
+                _fileUploadStates.value = updatedStates
+
+            } catch (e: Exception) {
+                val updatedStates = _fileUploadStates.value.toMutableMap()
+                updatedStates[weekId] = currentState.copy(
+                    isUploading = false,
+                    errorMessage = "Upload gagal: ${e.message}"
+                )
+                _fileUploadStates.value = updatedStates
             }
         }
     }

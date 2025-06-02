@@ -1,5 +1,6 @@
 package com.pamlanjut.evolvance20.data.remote.api
 
+import android.net.Uri
 import com.google.gson.annotations.SerializedName
 import com.pamlanjut.evolvance20.domain.model.UserModel
 import retrofit2.Response
@@ -60,4 +61,12 @@ data class VerifyOtpRequest(
 data class UserResponse(
     val success: Boolean,
     val data: UserModel
+)
+
+data class FileUpload(
+    val selectedFileUri: Uri? = null,
+    val selectedFileName: String? = null,
+    val isUploading: Boolean = false,
+    val uploadSuccess: Boolean = false,
+    val errorMessage: String? = null
 )
