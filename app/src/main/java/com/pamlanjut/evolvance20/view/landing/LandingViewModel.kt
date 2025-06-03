@@ -25,4 +25,10 @@ class LandingViewModel @Inject constructor(
             _count.value++
         }
     }
+
+    fun decrement() {
+        if (_count.value > 0) {
+            _count.value--
+        }
+    }
 }

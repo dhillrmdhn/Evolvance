@@ -1,0 +1,72 @@
+package com.pamlanjut.evolvance20.data.remote.api
+
+import android.net.Uri
+import com.google.gson.annotations.SerializedName
+import com.pamlanjut.evolvance20.domain.model.UserModel
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+
+interface AuthApi {
+    @POST("auth/login")
+    suspend fun login(
+        @Body request: LoginRequest
+    ): LoginResponse
+
+    @POST("auth/register")
+    suspend fun register(
+        @Body request: RegisterRequest
+    ): Response<RegisterResponse>
+
+    @POST("auth/verify")
+    suspend fun verifyOtp(
+        @Body request: VerifyOtpRequest
+    ): Response<RegisterResponse>
+
+    @GET("users")
+    suspend fun getUsers(
+        @Header("Authorization") token: String
+    ): Response<UserResponse>
+}
+
+data class LoginRequest(
+    val email: String,
+    val password: String
+)
+
+data class LoginResponse(
+    @SerializedName("access_token")
+    val accessToken: String
+)
+
+data class RegisterRequest(
+    val name: String = "",
+    val email: String = "",
+    val password: String = "",
+    val password_confirmation: String = ""
+)
+
+data class RegisterResponse(
+    val success: Boolean,
+    val message: String
+)
+
+data class VerifyOtpRequest(
+    val email: String,
+    val code: String
+)
+
+data class UserResponse(
+    val success: Boolean,
+    val data: UserModel
+)
+
+data class FileUpload(
+    val selectedFileUri: Uri? = null,
+    val selectedFileName: String? = null,
+    val isUploading: Boolean = false,
+    val uploadSuccess: Boolean = false,
+    val errorMessage: String? = null
+)
